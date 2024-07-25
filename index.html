@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <div class="calculator">
+            <div class="display">{{ currentInput }}</div>
+            <div class="buttons">
+                <button @click="clearInput">C</button>
+                <button @click="deleteLast">←</button>
+                <button @click="appendOperator('/')">÷</button>
+                <button @click="appendOperator('*')">×</button>
+                <button @click="appendNumber(7)">7</button>
+                <button @click="appendNumber(8)">8</button>
+                <button @click="appendNumber(9)">9</button>
+                <button @click="appendOperator('-')">−</button>
+                <button @click="appendNumber(4)">4</button>
+                <button @click="appendNumber(5)">5</button>
+                <button @click="appendNumber(6)">6</button>
+                <button @click="appendOperator('+')">+</button>
+                <button @click="appendNumber(1)">1</button>
+                <button @click="appendNumber(2)">2</button>
+                <button @click="appendNumber(3)">3</button>
+                <button @click="calculateResult" class="equals">=</button>
+                <button @click="appendNumber(0)" class="zero">0</button>
+                <button @click="appendDot">.</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
