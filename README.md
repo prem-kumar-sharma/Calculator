@@ -1,6 +1,6 @@
 # Calculator
 
-![Calculator](https://github.com/prem-kumar-sharma/Calculator/blob/main/screenshot.png)
+![Calculator](https://i.ytimg.com/vi/cGgLHJGyS34/maxresdefault.jpg)
 
 ## Description
 
