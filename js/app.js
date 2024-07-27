@@ -1,65 +1,45 @@
-new Vue({
-    el: '#app',
-    data: {
-        currentInput: '0',
-        operator: null,
-        previousInput: null,
-    },
-    methods: {
-        appendNumber(number) {
-            if (this.currentInput === '0') {
-                this.currentInput = String(number);
-            } else {
-                this.currentInput += String(number);
-            }
-        },
-        appendDot() {
-            if (!this.currentInput.includes('.')) {
-                this.currentInput += '.';
-            }
-        },
-        appendOperator(operator) {
-            if (this.currentInput !== '0') {
-                this.operator = operator;
-                this.previousInput = this.currentInput;
-                this.currentInput = '';
-            }
-        },
-        clearInput() {
-            this.currentInput = '0';
-            this.operator = null;
-            this.previousInput = null;
-        },
-        deleteLast() {
-            this.currentInput = this.currentInput.slice(0, -1) || '0';
-        },
-        calculateResult() {
-            let result;
-            const prev = parseFloat(this.previousInput);
-            const current = parseFloat(this.currentInput);
+const screen = document.getElementById('calculator-screen');
+let currentInput = '0';
+let previousInput = '';
+let operator = '';
 
-            if (isNaN(prev) || isNaN(current)) return;
+document.querySelectorAll('.button').forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.innerText;
 
-            switch (this.operator) {
-                case '+':
-                    result = prev + current;
-                    break;
-                case '-':
-                    result = prev - current;
-                    break;
-                case '*':
-                    result = prev * current;
-                    break;
-                case '/':
-                    result = prev / current;
-                    break;
-                default:
-                    return;
+        if (value === 'AC') {
+            currentInput = '0';
+            previousInput = '';
+            operator = '';
+        } else if (value === 'DE') {
+            currentInput = currentInput.slice(0, -1) || '0';
+        } else if (['/', 'x', '-', '+'].includes(value)) {
+            operator = value;
+            previousInput = currentInput;
+            currentInput = '0';
+        } else if (value === '=') {
+            if (operator && previousInput) {
+                currentInput = calculate(previousInput, currentInput, operator);
+                operator = '';
+                previousInput = '';
             }
-
-            this.currentInput = String(result);
-            this.operator = null;
-            this.previousInput = null;
+        } else {
+            currentInput = currentInput === '0' ? value : currentInput + value;
         }
-    }
+
+        screen.innerText = currentInput;
+    });
 });
+
+function calculate(a, b, op) {
+    const num1 = parseFloat(a);
+    const num2 = parseFloat(b);
+
+    switch (op) {
+        case '/': return (num1 / num2).toString();
+        case 'x': return (num1 * num2).toString();
+        case '-': return (num1 - num2).toString();
+        case '+': return (num1 + num2).toString();
+        default: return '0';
+    }
+}
