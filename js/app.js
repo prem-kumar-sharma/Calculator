@@ -14,12 +14,11 @@ document.querySelectorAll('.button').forEach(button => {
         } else if (value === 'DE') {
             currentInput = currentInput.slice(0, -1) || '0';
         } else if (['/', 'x', '-', '+'].includes(value)) {
-            if (previousInput && operator) {
-                currentInput = calculate(previousInput, currentInput, operator);
+            if (currentInput !== '0') {
+                operator = value;
+                previousInput = currentInput;
+                currentInput = '0';
             }
-            operator = value;
-            previousInput = currentInput;
-            currentInput = '0';
         } else if (value === '=') {
             if (operator && previousInput) {
                 currentInput = calculate(previousInput, currentInput, operator);
@@ -27,11 +26,7 @@ document.querySelectorAll('.button').forEach(button => {
                 previousInput = '';
             }
         } else {
-            if (currentInput === '0' && value !== '.') {
-                currentInput = value;
-            } else {
-                currentInput += value;
-            }
+            currentInput = currentInput === '0' ? value : currentInput + value;
         }
 
         screen.innerText = currentInput;
