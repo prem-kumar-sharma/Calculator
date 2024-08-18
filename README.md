@@ -15,7 +15,7 @@ A simple, responsive calculator web application built using HTML, CSS, and JavaS
 
 ## Live Demo
 
-Check out the live demo [here](https://your-live-demo-link.com).
+Check out the live demo [here](https://prem-kumar-sharma.github.io/Calculator/).
 
 ## Getting Started
 
