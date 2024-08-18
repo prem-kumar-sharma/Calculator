@@ -2,6 +2,7 @@ const screen = document.getElementById('calculator-screen');
 let currentInput = '0';
 let previousInput = '';
 let operator = '';
+let operatorPressed = false;
 
 document.querySelectorAll('.button').forEach(button => {
     button.addEventListener('click', () => {
@@ -11,13 +12,19 @@ document.querySelectorAll('.button').forEach(button => {
             currentInput = '0';
             previousInput = '';
             operator = '';
+            operatorPressed = false;
         } else if (value === 'DE') {
             currentInput = currentInput.slice(0, -1) || '0';
         } else if (['/', 'x', '-', '+'].includes(value)) {
-            if (currentInput !== '0') {
+            if (operatorPressed) {
+                operator = value;  // Change the operator without resetting inputs
+            } else if (currentInput !== '0') {
+                if (operator && previousInput) {
+                    currentInput = calculate(previousInput, currentInput, operator);
+                }
                 operator = value;
                 previousInput = currentInput;
-                currentInput = '0';
+                operatorPressed = true;
             }
         } else if (value === '=') {
             if (operator && previousInput) {
@@ -25,8 +32,14 @@ document.querySelectorAll('.button').forEach(button => {
                 operator = '';
                 previousInput = '';
             }
+            operatorPressed = false;
         } else {
-            currentInput = currentInput === '0' ? value : currentInput + value;
+            if (operatorPressed) {
+                currentInput = value;
+                operatorPressed = false;
+            } else {
+                currentInput = currentInput === '0' ? value : currentInput + value;
+            }
         }
 
         screen.innerText = currentInput;
